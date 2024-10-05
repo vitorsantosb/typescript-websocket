@@ -8,9 +8,10 @@
         "@core": "build/core"
     },
     "scripts": {
-        "start:nodemon": "nodemon ts-node src/index.ts",
+        "start:nodemon": "nodemon ts-node src/index.ts | pino-pretty",
         "dev": "ts-node src/index.ts",
-        "build": "tsc"
+        "docker:build": "docker compose build",
+        "docker:up": "docker compose up -d"
     },
     "keywords": [],
     "author": "",
@@ -19,7 +20,10 @@
         "@types/node": "^22.7.4",
         "express": "^4.21.0",
         "module-alias": "^2.2.3",
+        "mongodb": "^6.9.0",
         "nodemon": "^3.1.7",
+        "pino": "^9.4.0",
+        "pino-pretty": "^11.2.2",
         "ts-node": "^10.9.2"
     },
     "devDependencies": {

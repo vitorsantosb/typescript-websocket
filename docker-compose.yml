@@ -1,0 +1,56 @@
+version: '3'
+services:
+  template_project:
+    extra_hosts:
+      - 'host.docker.internal:host-gateway'
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: node-20.16.0/template_project
+    ports:
+      - '${APP_PORT:-4000}:4000'
+
+    volumes:
+      - '.:/usr/src/template_project'
+    networks:
+      - mevi
+    depends_on:
+      - mongodb
+
+  mongodb:
+    volumes:
+      - 'template_project-mongo:/data/db'
+    image: mongo:latest
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: '${MONGODB_USERNAME:-mongo}'
+      MONGO_INITDB_ROOT_PASSWORD: '${MONGODB_PASSWORD:-mongo}'
+    ports:
+      - '27017:27017'
+    networks:
+      - mevi
+
+  redis:
+    container_name: "redis-mevi"
+    image: 'redis:alpine'
+    command: redis-server --save 20 1
+    restart: always
+    ports:
+      - '${FORWARD_REDIS_PORT:-6379}:6379'
+    volumes:
+      - 'template_project-redis:/data'
+    networks:
+      - template_project
+    healthcheck:
+      test: [ "CMD", "redis-cli", "ping" ]
+      retries: 3
+      timeout: 5s
+
+networks:
+  template_project:
+    driver: bridge
+volumes:
+  template_project-redis:
+    driver: local
+  template_project-mongo:
+    driver: local
