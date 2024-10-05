@@ -1,0 +1,29 @@
+{
+    "name": "socketio-chat",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "_moduleAliases": {
+        "@modules": "build/modules",
+        "@core": "build/core"
+    },
+    "scripts": {
+        "start:nodemon": "nodemon --watch src/** --ext ts,json --ignore src/**/*.spec.ts --exec ts-node src/index.ts",
+        "dev": "ts-node src/index.ts",
+        "build": "tsc"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "@types/node": "^22.7.4",
+        "express": "^4.21.0",
+        "module-alias": "^2.2.3",
+        "ts-node": "^10.9.2"
+    },
+    "devDependencies": {
+        "@types/express": "^5.0.0",
+        "tsconfig-paths": "^4.2.0",
+        "typescript": "^5.6.2"
+    }
+}
