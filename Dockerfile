@@ -1,15 +1,15 @@
 FROM node:20.16.0
 
 
-RUN mkdir -p /usr/src/mevi_projetct
+RUN mkdir -p /usr/src/template_project
 
-WORKDIR /usr/src/mevi_projetct
+WORKDIR /usr/src/template_project
 
 
-COPY package.json /usr/src/mevi_projetct
+COPY package.json /usr/src/template_project
 RUN npm install
 
-COPY . /usr/src/mevi_projetct
+COPY . /usr/src/template_project
 
 EXPOSE 5000
 

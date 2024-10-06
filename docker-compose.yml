@@ -13,7 +13,7 @@ services:
     volumes:
       - '.:/usr/src/template_project'
     networks:
-      - mevi
+      - template_project
     depends_on:
       - mongodb
 
@@ -28,7 +28,7 @@ services:
     ports:
       - '27017:27017'
     networks:
-      - mevi
+      - template_project
 
   redis:
     container_name: "redis-mevi"

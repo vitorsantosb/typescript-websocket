@@ -1,10 +1,12 @@
-
 import express from 'express';
 import { Request, Response, NextFunction } from 'express';
 import bodyParser from 'body-parser';
 import cors from 'cors';
 
 const app = express();
+
+//controllers
+import userController from './routes/user/user.controller';
 
 app.use(cors({
     origin: ['*'],
@@ -18,6 +20,9 @@ app.use(bodyParser.urlencoded({
     limit: '50mb',
     parameterLimit: 50000
 }));
+
+app.use('/user', userController);
+
 
 app.use((_req: Request, res: Response, next: NextFunction): void => {
     res.header('Access-Control-Allow-Origin', '*');

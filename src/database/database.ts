@@ -1,8 +1,12 @@
 import {MongoClient, Collection, Db, Document} from 'mongodb';
-require('dotenv').config();
+import dotenv from 'dotenv';
+dotenv.config();
 
 const url: string = process.env.MONGO_URI!;
+
 const client = new MongoClient(url);
+
+
 
 interface IDatabase {
   db: Db | null;
@@ -34,7 +38,7 @@ type IDatabaseWithCollections = IDatabase & { collections: ICollections };
 export async function GetDatabase(): Promise<IDatabaseWithCollections> {
   if (!database.connection) {
     database.connection = await client.connect();
-    database.db = client.db(process.env.DATABASE_NAME!);
+    database.db = client.db(process.env.DATABASE_NAME);
     database.collections = await mountCollections(database.db);
   }
   return database as IDatabaseWithCollections;
