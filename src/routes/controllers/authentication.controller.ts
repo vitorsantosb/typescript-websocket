@@ -1,10 +1,10 @@
 import express from 'express';
 import {Request, Response} from 'express';
-import {userFunctions} from '@routes/user/functions/user.functions';
+import {authFunctions} from '@routes/views/auth/functions/auth.functions';
 const router = express.Router();
 
-router.post('/register', (req: Request, res: Response) => {
-	userFunctions.register(req, res).then(r => {
+router.post('/login', (req: Request, res: Response) => {
+	authFunctions.login(req, res).then(r => {
 		if(r){
 			return;
 		}
@@ -12,7 +12,7 @@ router.post('/register', (req: Request, res: Response) => {
 		if(err){
 			return err;
 		}
-	});
-});
+	})
+})
 
 export default router;

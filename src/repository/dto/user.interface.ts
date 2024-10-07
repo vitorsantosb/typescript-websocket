@@ -1,4 +1,5 @@
 export interface IUser {
+  id: string;
   name: string;
   email: string;
   password: string;
@@ -6,12 +7,7 @@ export interface IUser {
   is_deleted: boolean;
   
   chat_list: [];
-  
-  timestamp: {
-    created_at: Date;
-    updated_at: Date;
-    deleted_at: Date | undefined;
-  }
+  sessions: [];
 }
 
 

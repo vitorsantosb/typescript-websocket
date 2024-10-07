@@ -31,7 +31,7 @@ services:
       - template_project
 
   redis:
-    container_name: "redis-mevi"
+    container_name: "redis-template_project"
     image: 'redis:alpine'
     command: redis-server --save 20 1
     restart: always
@@ -45,6 +45,18 @@ services:
       test: [ "CMD", "redis-cli", "ping" ]
       retries: 3
       timeout: 5s
+
+  postgres:
+    image: postgres:17
+    restart: always
+    container_name: 'postgres-template_project'
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: '123456'
+      POSTGRES_DB: posts-db
+    ports:
+      - "5432:5432"
+
 
 networks:
   template_project:

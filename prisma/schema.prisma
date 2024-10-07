@@ -1,0 +1,55 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id         String        @id @default(uuid())
+  name       String
+  email      String        @unique
+  password   String
+  is_deleted Boolean       @default(false)
+  deleted_at DateTime?
+  created_at DateTime?     @default(now())
+  updated_at DateTime?     @default(now())
+  role       String?
+  messages   ChatMessages? @relation("UserMessages")
+  sessions   Session?
+  chat_rooms ChatRooms[]   @relation("UserChatRooms")
+}
+
+model Session {
+  id              String   @id @default(uuid())
+  token           String   @unique
+  access_token    String   @unique
+  device          String
+  os              String
+  browser         String
+  browser_version String
+  create_at       DateTime @default(now())
+  expires_at      DateTime @default(now())
+  user_id         User     @relation(fields: [id], references: [id], onDelete: Cascade)
+}
+
+model ChatRooms {
+  room_id       String         @id @default(uuid())
+  created_at    DateTime       @default(now())
+  updated_at    DateTime       @default(now())
+  chat_messages ChatMessages[] @relation("RoomMessages")
+  room_members  User[]         @relation("UserChatRooms")
+}
+
+model ChatMessages {
+  id         String    @id @default(uuid())
+  room_id    String
+  user_id    String    @unique
+  message    String
+  created_at DateTime  @default(now())
+  update_at  DateTime  @default(now())
+  room       ChatRooms @relation("RoomMessages", fields: [room_id], references: [room_id], onDelete: Cascade)
+  user       User      @relation("UserMessages", fields: [user_id], references: [id], onDelete: Cascade)
+}

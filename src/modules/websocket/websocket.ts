@@ -15,15 +15,20 @@ export function SetupWebSocket(server: HttpServer) {
 	});
 	
 	io.on('connection', (socket) => {
-		console.log('New client connected:', socket.id);
+		ApiLogMessage('[WEBSOCKET_SERVER]','New client connected:', socket.id);
 		
 		socket.on('message', (data) => {
-			console.log('Message received:', data);
+			ApiLogMessage('[WEBSOCKET_SERVER]','Message received:', data);
 			io.emit('message', data); // Reenvia a mensagem para todos os clientes
 		});
 		
+		socket.on('client_connected', (data) => {
+			ApiLogMessage('[WEBSOCKET_SERVER]','Client connected:', socket.id);
+			
+		})
+		
 		socket.on('disconnect', () => {
-			console.log('Client disconnected:', socket.id);
+			ApiLogMessage('[WEBSOCKET_SERVER]','Client disconnected:', socket.id);
 		});
 	});
 	
