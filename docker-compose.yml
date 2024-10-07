@@ -14,21 +14,6 @@ services:
       - '.:/usr/src/template_project'
     networks:
       - template_project
-    depends_on:
-      - mongodb
-
-  mongodb:
-    volumes:
-      - 'template_project-mongo:/data/db'
-    image: mongo:latest
-    restart: always
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: '${MONGODB_USERNAME:-mongo}'
-      MONGO_INITDB_ROOT_PASSWORD: '${MONGODB_PASSWORD:-mongo}'
-    ports:
-      - '27017:27017'
-    networks:
-      - template_project
 
   redis:
     container_name: "redis-template_project"
@@ -63,6 +48,4 @@ networks:
     driver: bridge
 volumes:
   template_project-redis:
-    driver: local
-  template_project-mongo:
     driver: local
