@@ -2,7 +2,9 @@ import {MongoClient, Collection, Db, Document} from 'mongodb';
 import dotenv from 'dotenv';
 dotenv.config();
 
-const url: string = process.env.MONGO_URI!;
+
+console.log('mongodb: ', process.env.MONGO_URI);
+const url: string = 'mongodb://mongo:mongo@localhost:27017/admin';
 
 const client = new MongoClient(url);
 
@@ -38,7 +40,7 @@ type IDatabaseWithCollections = IDatabase & { collections: ICollections };
 export async function GetDatabase(): Promise<IDatabaseWithCollections> {
   if (!database.connection) {
     database.connection = await client.connect();
-    database.db = client.db(process.env.DATABASE_NAME);
+    database.db = client.db('template_project');
     database.collections = await mountCollections(database.db);
   }
   return database as IDatabaseWithCollections;
